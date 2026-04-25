@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>O Coração que Pedia Socorro — Hub Dr. Jorge</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Barlow+Condensed:wght@300;400;600;700;800&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep: #050810;
+    --dark: #0a0f1e;
+    --card: #0d1426;
+    --border: #1a2540;
+    --red: #e63946;
+    --red-glow: rgba(230,57,70,0.3);
+    --gold: #f4a261;
+    --gold-dim: rgba(244,162,97,0.15);
+    --teal: #2ec4b6;
+    --teal-dim: rgba(46,196,182,0.1);
+    --purple: #7b2d8b;
+    --blue: #1d7ec2;
+    --text: #e8edf5;
+    --muted: #6b7a96;
+    --accent-line: rgba(255,255,255,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--deep);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(230,57,70,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 80% 80%, rgba(29,126,194,0.12) 0%, transparent 50%),
+      var(--deep);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    border: 1px solid rgba(230,57,70,0.08);
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    animation: pulse-ring 4s ease-in-out infinite;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 900px; height: 900px;
+    border-radius: 50%;
+    border: 1px solid rgba(230,57,70,0.04);
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    animation: pulse-ring 4s ease-in-out infinite 1s;
+  }
+
+  @keyframes pulse-ring {
+    0%,100% { opacity: 0.5; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%,-50%) scale(1.04); }
+  }
+
+  @keyframes ecg {
+    0% { stroke-dashoffset: 1000; }
+    100% { stroke-dashoffset: 0; }
+  }
+
+  .ecg-line {
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    opacity: 0.15;
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 24px;
+    padding: 6px 20px;
+    border: 1px solid rgba(230,57,70,0.3);
+    border-radius: 2px;
+    display: inline-block;
+    position: relative; z-index: 1;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 8vw, 100px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -2px;
+    position: relative; z-index: 1;
+    margin-bottom: 8px;
+  }
+  .hero-title span { color: var(--red); font-style: italic; }
+
+  .hero-subtitle {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 300;
+    font-size: clamp(14px, 2vw, 20px);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 48px;
+    position: relative; z-index: 1;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2px;
+    position: relative; z-index: 1;
+  }
+
+  .stat-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    padding: 28px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .stat-card:hover {
+    border-color: var(--red);
+    background: rgba(230,57,70,0.05);
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+  .stat-card:hover::before { transform: scaleX(1); }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--red);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 8px;
+    display: block;
+  }
+  .stat-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-weight: 300;
+  }
+
+  /* ── SECTION ── */
+  section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 40px;
+  }
+
+  .section-header {
+    margin-bottom: 56px;
+    position: relative;
+    padding-left: 24px;
+  }
+  .section-header::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 4px; bottom: 4px;
+    width: 3px;
+    background: var(--red);
+  }
+
+  .section-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    font-weight: 900;
+    color: var(--red);
+    opacity: 0.12;
+    line-height: 1;
+    margin-bottom: -20px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .section-title em { color: var(--red); font-style: italic; }
+
+  .section-desc {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  /* ── PATIENT CARD ── */
+  .patient-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+  }
+
+  .p-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .p-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 80px; height: 80px;
+    background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .p-card:hover::after { opacity: 1; }
+
+  .p-card-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .p-card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 12px;
+  }
+  .p-card-content {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(232,237,245,0.85);
+  }
+  .p-card-content strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .quote-highlight {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, rgba(230,57,70,0.08) 0%, var(--card) 100%);
+    border: 1px solid rgba(230,57,70,0.25);
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  .quote-mark {
+    font-family: 'Playfair Display', serif;
+    font-size: 120px;
+    color: var(--red);
+    opacity: 0.3;
+    line-height: 0.7;
+    flex-shrink: 0;
+  }
+  .quote-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--text);
+  }
+  .quote-text span {
+    font-style: normal;
+    font-size: 13px;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    color: var(--muted);
+    display: block;
+    margin-top: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 0 auto;
+  }
+
+  /* ── LABS GRID ── */
+  .labs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-bottom: 2px;
+  }
+
+  .lab-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .lab-item:hover { border-color: var(--gold); }
+  .lab-item.alert { border-color: rgba(230,57,70,0.4); }
+  .lab-item.good { border-color: rgba(46,196,182,0.3); }
+
+  .lab-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 44px;
+    font-weight: 900;
+    line-height: 1;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .lab-value.danger { color: var(--red); }
+  .lab-value.warn { color: var(--gold); }
+  .lab-value.ok { color: var(--teal); }
+  .lab-value.arrow { color: var(--red); font-size: 56px; }
+
+  .lab-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .lab-target {
+    font-size: 11px;
+    color: var(--red);
+    font-weight: 500;
+  }
+  .lab-context {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ── PARADOX BOX ── */
+  .paradox-box {
+    background: linear-gradient(135deg, rgba(46,196,182,0.06) 0%, var(--card) 100%);
+    border: 1px solid rgba(46,196,182,0.2);
+    padding: 40px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    align-items: center;
+  }
+  .paradox-icon {
+    font-size: 48px;
+    opacity: 0.8;
+  }
+  .paradox-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+  .paradox-text {
+    font-size: 15px;
+    color: rgba(232,237,245,0.8);
+    line-height: 1.7;
+  }
+
+  /* ── DIAGNOSIS CARDS ── */
+  .diag-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .diag-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .diag-card:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(0,0,0,0.4); }
+
+  .diag-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+  }
+  .diag-card.ic::before { background: var(--red); }
+  .diag-card.dm::before { background: var(--gold); }
+  .diag-card.has::before { background: var(--blue); }
+  .diag-card.psi::before { background: var(--purple); }
+
+  .diag-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 900;
+    opacity: 0.07;
+    line-height: 1;
+    position: absolute;
+    top: 16px; right: 24px;
+    color: white;
+  }
+
+  .diag-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 2px;
+    display: inline-block;
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+  .ic .diag-badge { background: rgba(230,57,70,0.15); color: var(--red); }
+  .dm .diag-badge { background: rgba(244,162,97,0.15); color: var(--gold); }
+  .has .diag-badge { background: rgba(29,126,194,0.15); color: var(--blue); }
+  .psi .diag-badge { background: rgba(123,45,139,0.15); color: #c77dff; }
+
+  .diag-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .diag-points {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .diag-points li {
+    font-size: 13px;
+    color: rgba(232,237,245,0.75);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .diag-points li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--red);
+    font-size: 12px;
+    top: 1px;
+  }
+  .dm .diag-points li::before { color: var(--gold); }
+  .has .diag-points li::before { color: var(--blue); }
+  .psi .diag-points li::before { color: #c77dff; }
+
+  /* ── TROPONINA ALERT ── */
+  .troponina-alert {
+    background: linear-gradient(135deg, rgba(230,57,70,0.12) 0%, var(--card) 60%);
+    border: 1px solid rgba(230,57,70,0.35);
+    padding: 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2px;
+  }
+  .troponina-alert::before {
+    content: '≠';
+    position: absolute;
+    font-size: 400px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    color: var(--red);
+    opacity: 0.04;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .trop-main {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 5vw, 56px);
+    font-weight: 900;
+    line-height: 1.1;
+    position: relative; z-index: 1;
+  }
+  .trop-main .red { color: var(--red); }
+  .trop-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 20px;
+    position: relative; z-index: 1;
+  }
+  .trop-condition {
+    display: inline-flex;
+    gap: 4px;
+    margin-top: 24px;
+    position: relative; z-index: 1;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .trop-tag {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    padding: 6px 16px;
+    font-size: 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .trop-tag.check { border-color: rgba(46,196,182,0.3); color: var(--teal); background: rgba(46,196,182,0.06); }
+
+  /* ── PILARES ── */
+  .pilares-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-bottom: 2px;
+  }
+
+  .pilar {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 36px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .pilar:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+  }
+
+  .pilar-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    font-weight: 900;
+    opacity: 0.06;
+    position: absolute;
+    top: 0; right: 12px;
+    line-height: 1;
+    color: white;
+  }
+  .pilar-icon {
+    font-size: 36px;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .pilar-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .pilar-drug {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+  .pilar-dose {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    font-weight: 300;
+  }
+  .pilar-hr {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .pilar-pct {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .pilar-study {
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: rgba(107,122,150,0.7);
+    text-transform: uppercase;
+  }
+
+  .p1 { border-top: 2px solid #e63946; }
+  .p1 .pilar-hr { color: #e63946; }
+  .p2 { border-top: 2px solid #f4a261; }
+  .p2 .pilar-hr { color: #f4a261; }
+  .p3 { border-top: 2px solid #2ec4b6; }
+  .p3 .pilar-hr { color: #2ec4b6; }
+  .p4 { border-top: 2px solid #7b2d8b; }
+  .p4 .pilar-hr { color: #c77dff; }
+
+  /* ── PRESCRIÇÃO TABLE ── */
+  .presc-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+  .presc-table th {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 14px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+  }
+  .presc-table td {
+    padding: 14px 20px;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(26,37,64,0.5);
+    vertical-align: middle;
+  }
+  .presc-table tr:last-child td { border-bottom: none; }
+  .presc-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .presc-med { font-weight: 500; color: var(--text); font-size: 14px; }
+  .presc-med small { display: block; font-size: 11px; color: var(--muted); font-weight: 300; }
+  .presc-dose { font-family: 'Barlow Condensed', sans-serif; color: var(--gold); font-size: 14px; letter-spacing: 1px; }
+  .presc-why { font-size: 12px; color: var(--muted); }
+  .presc-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-size: 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px;
+    font-weight: 700;
+  }
+  .tag-ic { background: rgba(230,57,70,0.12); color: var(--red); }
+  .tag-dm { background: rgba(244,162,97,0.12); color: var(--gold); }
+  .tag-lip { background: rgba(29,126,194,0.12); color: var(--blue); }
+
+  .ceaf-note {
+    background: linear-gradient(90deg, rgba(46,196,182,0.08), transparent);
+    border-left: 3px solid var(--teal);
+    padding: 20px 24px;
+    font-size: 13px;
+    color: rgba(232,237,245,0.8);
+    margin-top: 2px;
+  }
+  .ceaf-note strong { color: var(--teal); }
+
+  /* ── LIÇÕES ── */
+  .licoes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-bottom: 2px;
+  }
+
+  .licao {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .licao:hover { border-color: rgba(230,57,70,0.3); }
+  .licao::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--red), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .licao:hover::after { transform: scaleX(1); }
+
+  .licao-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    color: var(--red);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-style: italic;
+  }
+  .licao-num::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .licao-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .licao-sub {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* ── FINAL QUOTE ── */
+  .final-section {
+    background: linear-gradient(180deg, var(--deep) 0%, #080c18 100%);
+    padding: 120px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .final-section::before {
+    content: '';
+    position: absolute;
+    width: 800px; height: 800px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(230,57,70,0.06) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+  }
+
+  .final-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 4vw, 44px);
+    font-weight: 900;
+    line-height: 1.3;
+    max-width: 800px;
+    margin: 0 auto 32px;
+    position: relative; z-index: 1;
+  }
+  .final-quote .red { color: var(--red); font-style: italic; }
+
+  .final-sub {
+    font-size: 14px;
+    color: var(--muted);
+    max-width: 600px;
+    margin: 0 auto 48px;
+    line-height: 1.8;
+    position: relative; z-index: 1;
+  }
+
+  .final-tags {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+    position: relative; z-index: 1;
+  }
+  .final-tag {
+    background: rgba(230,57,70,0.08);
+    border: 1px solid rgba(230,57,70,0.2);
+    padding: 8px 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    font-weight: 600;
+  }
+
+  .signature {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--muted);
+    position: relative; z-index: 1;
+  }
+  .signature strong {
+    color: var(--text);
+    font-style: normal;
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+
+  /* ── FULL WIDTH BG SECTIONS ── */
+  .full-bg {
+    background: rgba(5, 8, 16, 0.95);
+    padding: 80px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--deep); }
+  ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 2px; }
+
+  /* Animations on scroll */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .patient-grid, .diag-grid, .pilares-grid, .licoes-grid { grid-template-columns: 1fr; }
+    .labs-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero-stats { flex-direction: column; align-items: center; }
+    section { padding: 48px 20px; }
+    .quote-highlight { flex-direction: column; }
+    .paradox-box { grid-template-columns: 1fr; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <svg class="ecg-line" viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 L200,30 L220,10 L240,50 L260,5 L280,55 L300,30 L320,30 L400,30 L420,10 L440,50 L460,5 L480,55 L500,30 L520,30 L700,30 L720,10 L740,50 L760,5 L780,55 L800,30 L820,30 L1000,30 L1020,10 L1040,50 L1060,5 L1080,55 L1100,30 L1440,30"
+      stroke="#e63946" stroke-width="1.5" stroke-dasharray="1000" style="animation: ecg 3s linear infinite;"/>
+  </svg>
+
+  <span class="hero-tag">Hub Dr. Jorge · Cardiologia · Caso Clínico</span>
+
+  <h1 class="hero-title">O Coração que<br><span>Pedia Socorro</span></h1>
+  <p class="hero-subtitle">IC com FE Reduzida, Diabetes e a Troponina que Assustou</p>
+
+  <div class="hero-stats">
+    <div class="stat-card">
+      <span class="stat-num">36%</span>
+      <span class="stat-label">Fração de Ejeção</span>
+      <p class="stat-sub">Eco 2022</p>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">6,7%</span>
+      <span class="stat-label">HbA1c</span>
+      <p class="stat-sub">Meta: &lt; 7,0%</p>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">131</span>
+      <span class="stat-label">LDL mg/dL</span>
+      <p class="stat-sub">Meta DM: &lt; 70</p>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">4</span>
+      <span class="stat-label">Pilares IC</span>
+      <p class="stat-sub">Quadrupla Terapia</p>
+    </div>
+  </div>
+</div>
+
+<!-- PACIENTE -->
+<section>
+  <div class="section-header fade-in">
+    <span class="section-number">01</span>
+    <h2 class="section-title">O Paciente —<br><em>Miguel Ângelo</em></h2>
+    <p class="section-desc">Homem de meia-idade · 1ª consulta com cardiologista · Acompanhado de familiar</p>
+  </div>
+
+  <div class="patient-grid fade-in">
+    <div class="p-card">
+      <span class="p-card-icon">🫀</span>
+      <div class="p-card-title">Histórico Cardíaco</div>
+      <div class="p-card-content">
+        <strong>Eco 2022:</strong> FE 36%<br>
+        <strong>Cateterismo 2022:</strong> Coronárias livres<br>
+        <strong>Etiologia:</strong> IC não isquêmica<br>
+        <strong>Provável causa:</strong> Pós-COVID / Hipertensiva<br>
+        <strong>COVID-19 × 2</strong> (tratamento domiciliar)
+      </div>
+    </div>
+    <div class="p-card">
+      <span class="p-card-icon">⚠️</span>
+      <div class="p-card-title">Perfil Psicossocial</div>
+      <div class="p-card-content">
+        <strong>Pavor de consultas médicas</strong><br>
+        Evita esforços físicos por medo<br>
+        Recusou hospitalização em episódios agudos<br>
+        <strong>Diagnóstico atrasado por anos</strong><br>
+        Adesão variável ao tratamento
+      </div>
+    </div>
+    <div class="p-card">
+      <span class="p-card-icon">📈</span>
+      <div class="p-card-title">Melhora Espontânea (–10d)</div>
+      <div class="p-card-content">
+        Retirou açúcar, doces e refrigerantes<br>
+        <strong>Edema de tornozelos:</strong> em regressão<br>
+        <strong>Noctúria:</strong> hora/hora → 2×/noite<br>
+        Cansaço e mal-estar: melhorando<br>
+        SpO₂: 99% (basal)
+      </div>
+    </div>
+
+    <div class="quote-highlight">
+      <div class="quote-mark">"</div>
+      <div>
+        <div class="quote-text">
+          "Fui informado que apareceu um infarto nos meus exames"
+          <span>Queixa principal — Ansiedade/pânico marcante · Recusou hospitais · Evita atividade física há anos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXAMES -->
+<section>
+  <div class="section-header fade-in">
+    <span class="section-number">02</span>
+    <h2 class="section-title">Exames —<br><em>O Dilema Diagnóstico</em></h2>
+    <p class="section-desc">Troponina Elevada = Infarto? Coleta domiciliar · Sem dor torácica típica · Sem emergência</p>
+  </div>
+
+  <div class="labs-grid fade-in">
+    <div class="lab-item alert">
+      <span class="lab-value danger">36%</span>
+      <span class="lab-name">Fração de Ejeção</span>
+      <span class="lab-context">Eco 2022</span>
+    </div>
+    <div class="lab-item alert">
+      <span class="lab-value warn">6,7%</span>
+      <span class="lab-name">HbA1c</span>
+      <span class="lab-target">Meta: &lt; 7,0%</span>
+    </div>
+    <div class="lab-item alert">
+      <span class="lab-value danger">131</span>
+      <span class="lab-name">LDL mg/dL</span>
+      <span class="lab-target">Meta DM: &lt; 70 mg/dL</span>
+    </div>
+    <div class="lab-item alert">
+      <span class="lab-value arrow">↑</span>
+      <span class="lab-name">Troponina</span>
+      <span class="lab-context">Coleta domiciliar</span>
+    </div>
+  </div>
+
+  <div class="labs-grid fade-in" style="grid-template-columns: repeat(3,1fr)">
+    <div class="lab-item good">
+      <span class="lab-value ok" style="font-size:28px; margin-top:8px">131 mg/dL</span>
+      <span class="lab-name">Glicose Jejum</span>
+    </div>
+    <div class="lab-item good">
+      <span class="lab-value ok" style="font-size:28px; margin-top:8px">0,97</span>
+      <span class="lab-name">Creatinina</span>
+      <span class="lab-context">Função renal preservada</span>
+    </div>
+    <div class="lab-item good">
+      <span class="lab-value ok" style="font-size:28px; margin-top:8px">Normal</span>
+      <span class="lab-name">CPK</span>
+    </div>
+  </div>
+
+  <div class="paradox-box fade-in" style="margin-top:2px">
+    <div class="paradox-icon">🔍</div>
+    <div>
+      <div class="paradox-title">O Paradoxo do Exame Normal</div>
+      <div class="paradox-text">
+        O exame físico está <strong>normal AGORA</strong> — orientado, lúcido, corado, RCR 2T BNF, sem sopros, MV presente, sem edema no momento.<br>
+        Mas a história revela <strong>meses de edema, dispneia e noctúria intensa</strong>.<br>
+        <em style="color: var(--teal)">"A foto de hoje não conta o álbum."</em>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TROPONINA ≠ IAM -->
+<section style="padding-bottom: 0;">
+  <div class="section-header fade-in">
+    <span class="section-number">03</span>
+    <h2 class="section-title">O Ponto de <em>Virada</em></h2>
+    <p class="section-desc">O raciocínio clínico que muda tudo</p>
+  </div>
+</section>
+<div class="troponina-alert fade-in">
+  <div class="trop-main">
+    Troponina <span class="red">isolada</span>, fora do contexto<br>
+    de emergência, <span class="red">NÃO fecha</span><br>
+    diagnóstico de infarto
+  </div>
+  <div class="trop-sub">Para confirmar IAM são necessários todos os critérios:</div>
+  <div class="trop-condition">
+    <span class="trop-tag check">✓ Curva de troponina (delta)</span>
+    <span class="trop-tag check">✓ Clínica compatível</span>
+    <span class="trop-tag check">✓ ECG alterado</span>
+    <span class="trop-tag check">✓ Contexto de emergência</span>
+  </div>
+</div>
+
+<!-- DIAGNÓSTICOS -->
+<section>
+  <div class="section-header fade-in">
+    <span class="section-number">04</span>
+    <h2 class="section-title">Os <em>Diagnósticos</em></h2>
+    <p class="section-desc">IC, DM, HAS, Dislipidemia e o fator psicossocial — todos centrais no manejo</p>
+  </div>
+
+  <div class="diag-grid fade-in">
+    <div class="diag-card ic">
+      <span class="diag-number">01</span>
+      <div class="diag-badge">Principal</div>
+      <div class="diag-title">IC com FE Reduzida<br><small style="font-size:14px; font-weight:400; color: var(--muted);">HFrEF</small></div>
+      <ul class="diag-points">
+        <li>FE 36% (Eco 2022)</li>
+        <li>Cateterismo: coronárias livres — etiologia não isquêmica</li>
+        <li>Provável cardiomiopatia pós-COVID / hipertensiva</li>
+        <li>Sintomas: dispneia, edema, noctúria, fadiga</li>
+      </ul>
+    </div>
+    <div class="diag-card dm">
+      <span class="diag-number">02</span>
+      <div class="diag-badge">Combustível da piora</div>
+      <div class="diag-title">Diabetes Mellitus<br><small style="font-size:14px; font-weight:400; color: var(--muted);">Tipo 2</small></div>
+      <ul class="diag-points">
+        <li>Glicose jejum 131 mg/dL · HbA1c 6,7%</li>
+        <li>Melhora expressiva só com restrição de açúcar</li>
+        <li>DM descompensado = combustível da piora da IC</li>
+        <li>Adesão variável ao tratamento</li>
+      </ul>
+    </div>
+    <div class="diag-card has">
+      <span class="diag-number">03</span>
+      <div class="diag-badge">Fator de risco</div>
+      <div class="diag-title">HAS + Dislipidemia</div>
+      <ul class="diag-points">
+        <li>Pico pressórico relatado: "chegou a 22"</li>
+        <li>LDL: 131 mg/dL · Meta DM: &lt; 70 mg/dL</li>
+        <li>Estatina anterior 10 mg: insuficiente</li>
+        <li>Trocar para atorvastatina 40 mg</li>
+      </ul>
+    </div>
+    <div class="diag-card psi">
+      <span class="diag-number">04</span>
+      <div class="diag-badge">Parte central do manejo</div>
+      <div class="diag-title">Ansiedade / Fobia Médica</div>
+      <ul class="diag-points">
+        <li>Adiou diagnóstico e tratamento por anos</li>
+        <li>Recusou emergência em episódios agudos</li>
+        <li>Impacto direto na adesão e prognóstico</li>
+        <li>Não é detalhe — é comorbidade central</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- QUADRUPLA TERAPIA -->
+<section>
+  <div class="section-header fade-in">
+    <span class="section-number">05</span>
+    <h2 class="section-title">Quadrupla Terapia —<br><em>4 Pilares que Salvam Vidas</em></h2>
+    <p class="section-desc">Todos os 4 pilares iniciados na 1ª consulta</p>
+  </div>
+
+  <div class="pilares-grid fade-in">
+    <div class="pilar p1">
+      <span class="pilar-num">1</span>
+      <span class="pilar-icon">💊</span>
+      <div class="pilar-name">Betabloqueador</div>
+      <div class="pilar-drug">Bisoprolol</div>
+      <div class="pilar-dose">½ cp 2,5 mg · 10h</div>
+      <span class="pilar-hr">HR 0.66</span>
+      <div class="pilar-pct">−34% mortalidade</div>
+      <div class="pilar-study">CIBIS-II · MERIT-HF</div>
+    </div>
+    <div class="pilar p2">
+      <span class="pilar-num">2</span>
+      <span class="pilar-icon">💊</span>
+      <div class="pilar-name">MRA</div>
+      <div class="pilar-drug">Espironolactona</div>
+      <div class="pilar-dose">25 mg · 08h</div>
+      <span class="pilar-hr">HR 0.70</span>
+      <div class="pilar-pct">−30% mortalidade</div>
+      <div class="pilar-study">RALES</div>
+    </div>
+    <div class="pilar p3">
+      <span class="pilar-num">3</span>
+      <span class="pilar-icon">💊</span>
+      <div class="pilar-name">SGLT2i</div>
+      <div class="pilar-drug">Dapagliflozina</div>
+      <div class="pilar-dose">10 mg · 10h</div>
+      <span class="pilar-hr">HR 0.74</span>
+      <div class="pilar-pct">−26% hospitalização</div>
+      <div class="pilar-study">DAPA-HF</div>
+    </div>
+    <div class="pilar p4">
+      <span class="pilar-num">4</span>
+      <span class="pilar-icon">💊</span>
+      <div class="pilar-name">ARNI</div>
+      <div class="pilar-drug">Sacubitril/<br>Valsartana</div>
+      <div class="pilar-dose">24/26 mg 2×/dia</div>
+      <span class="pilar-hr">HR 0.80</span>
+      <div class="pilar-pct">−20% mortalidade CV</div>
+      <div class="pilar-study">PARADIGM-HF</div>
+    </div>
+  </div>
+
+  <!-- PRESCRIÇÃO -->
+  <div class="fade-in" style="margin-top:2px;">
+    <table class="presc-table">
+      <thead>
+        <tr>
+          <th>Medicamento</th>
+          <th>Dose / Horário</th>
+          <th>Indicação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="presc-med">Sacubitril/Valsartana <small>Entresto 24/26 mg</small></div></td>
+          <td><div class="presc-dose">1 cp 7h + 1 cp 19h</div></td>
+          <td><span class="presc-tag tag-ic">IC — ARNI</span> <span class="presc-why"> CEAF via BNP</span></td>
+        </tr>
+        <tr>
+          <td><div class="presc-med">Bisoprolol <small>Concor 2,5 mg</small></div></td>
+          <td><div class="presc-dose">½ cp · 10h</div></td>
+          <td><span class="presc-tag tag-ic">IC — Betabloqueador</span></td>
+        </tr>
+        <tr>
+          <td><div class="presc-med">Espironolactona <small>Aldactone 25 mg</small></div></td>
+          <td><div class="presc-dose">1 cp · 08h</div></td>
+          <td><span class="presc-tag tag-ic">IC — MRA</span></td>
+        </tr>
+        <tr>
+          <td><div class="presc-med">Dapagliflozina <small>Forxiga 10 mg</small></div></td>
+          <td><div class="presc-dose">1 cp · 10h</div></td>
+          <td><span class="presc-tag tag-ic">IC</span> <span class="presc-tag tag-dm">DM — SGLT2i</span></td>
+        </tr>
+        <tr>
+          <td><div class="presc-med">Metformina <small>Glifage 500 mg</small></div></td>
+          <td><div class="presc-dose">2 cp pós-almoço + 2 cp pós-jantar</div></td>
+          <td><span class="presc-tag tag-dm">DM → 2 g/dia</span></td>
+        </tr>
+        <tr>
+          <td><div class="presc-med">Semaglutida <small>Caneta semanal</small></div></td>
+          <td><div class="presc-dose">1 aplic/semana · sábado</div></td>
+          <td><span class="presc-tag tag-dm">DM + CV</span></td>
+        </tr>
+        <tr>
+          <td><div class="presc-med">Atorvastatina 40 mg</div></td>
+          <td><div class="presc-dose">1 cp · noite</div></td>
+          <td><span class="presc-tag tag-lip">Dislipidemia</span> <span class="presc-why"> trocar 10→40 mg</span></td>
+        </tr>
+        <tr>
+          <td><div class="presc-med">AAS 81 mg</div></td>
+          <td><div class="presc-dose">1 cp/dia · pós-almoço</div></td>
+          <td><span class="presc-why">Antiagregação · menor risco GI</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="ceaf-note">
+      ⭐ <strong>Sacubitril/Valsartana via CEAF/LME:</strong> BNP + Eco solicitados → medicamento gratuito após ~30 dias de processo. Furosemida já em uso, mantida.
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- LIÇÕES -->
+<section>
+  <div class="section-header fade-in">
+    <span class="section-number">06</span>
+    <h2 class="section-title">O que esse caso<br><em>nos ensina</em></h2>
+    <p class="section-desc">Lições que ficam para a prática clínica diária</p>
+  </div>
+
+  <div class="licoes-grid fade-in">
+    <div class="licao">
+      <div class="licao-num">Lição 01</div>
+      <div class="licao-text">Troponina isolada ≠ IAM</div>
+      <div class="licao-sub">Sem curva de troponina, sem clínica compatível, sem ECG e sem contexto de emergência — troponina elevada é sofrimento miocárdico crônico até provar o contrário.</div>
+    </div>
+    <div class="licao">
+      <div class="licao-num">Lição 02</div>
+      <div class="licao-text">DM descontrolado descompensa IC</div>
+      <div class="licao-sub">A hiperglicemia crônica é cardiotóxica. Controlar a glicemia não é só proteger o rim — é proteger o miocárdio já comprometido.</div>
+    </div>
+    <div class="licao">
+      <div class="licao-num">Lição 03</div>
+      <div class="licao-text">Quadrupla terapia salva vidas</div>
+      <div class="licao-sub">Os 4 pilares têm evidência robusta de redução de mortalidade. Iniciar tudo na 1ª consulta, com titulação cuidadosa, é conduta baseada nas melhores diretrizes.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<div class="final-section">
+  <div class="final-quote">
+    "O <span class="red">'infarto'</span> que o paciente<br>temia não era o diagnóstico."
+  </div>
+  <p class="final-sub">
+    O diagnóstico real era uma IC silenciosa, alimentada por anos de diabetes descontrolado, em um paciente que evitava médicos por medo.<br>
+    <strong>A medicina de primeiro contato importa.</strong>
+  </p>
+  <div class="final-tags">
+    <span class="final-tag">IC com FE Reduzida</span>
+    <span class="final-tag">Diabetes Mellitus T2</span>
+    <span class="final-tag">Quadrupla Terapia</span>
+    <span class="final-tag">CEAF / LME</span>
+    <span class="final-tag">Cardiomiopatia Pós-COVID</span>
+  </div>
+  <div class="signature">
+    <strong>Hub Dr. Jorge</strong>
+    Ensino médico com pacientes reais · drjorgeferreira.com.br
+  </div>
+</div>
+
+<script>
+  // Fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
